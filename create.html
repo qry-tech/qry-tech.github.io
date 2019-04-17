@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Q.Party</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <center>
+        <div id="main" align="left">
+            <br><br>
+            <label id="feedback"><strong>Create a short link</strong></label><br><br>
+            <label for="name">q.party#</label><input type="text" id="name" maxlength="12" size="7" placeholder="link-name" onkeypress="return AvoidSpace(event)"><br><br>
+            <label for="url">Link to </label><input type="text" id="url" maxlength="50" size="7" placeholder="example.tld" onkeypress="return AvoidSpace(event)"><br><br>
+            <button onclick="addFB()">Create short link</button>
+        </div>
+    </center>
+    <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
+    <script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyDDzMxhv8Rdkag_BpYey3_8zk0x6g72FY8",
+        authDomain: "qry-shortener.firebaseapp.com",
+        databaseURL: "https://qry-shortener.firebaseio.com",
+        projectId: "qry-shortener",
+        storageBucket: "qry-shortener.appspot.com",
+        messagingSenderId: "941227555300"
+    };
+
+    firebase.initializeApp(config);
+
+    function addFB() {
+        document.getElementById('feedback').innerHTML = "&#128336; Creating short link...";
+        let name = document.getElementById('name').value,
+            url = document.getElementById('url').value;
+
+        firebase.database().ref('qry-shortener/' + name).set({
+            Name: name,
+            URL: url
+        });
+        document.getElementById('feedback').innerHTML = "&#128077; Short link created.";
+    }
+
+    function AvoidSpace(event) {
+        let k = event ? event.which : window.event.keyCode;
+        if (k == 32) return false;
+    }
+    </script>
+</body>
+
+</html>
