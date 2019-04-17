@@ -8,34 +8,11 @@
 
 <body>
 	<center>
-		<h1>Redirecting...</h1>
-		<h2><a href="create.html">Powered by q.party</a></h2>
+		<h1>Oops</h1>
+		<h2>There isn't a link here.</h2>
+        <h3><a href="#" onclick="window.history.go(-2);">Go Back</a></h3>
 	</center>
     <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
-    <script>
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyDDzMxhv8Rdkag_BpYey3_8zk0x6g72FY8",
-        authDomain: "qry-shortener.firebaseapp.com",
-        databaseURL: "https://qry-shortener.firebaseio.com",
-        projectId: "qry-shortener",
-        storageBucket: "qry-shortener.appspot.com",
-        messagingSenderId: "941227555300"
-    };
-
-    firebase.initializeApp(config);
-
-    if (window.location.href.indexOf("#") != -1) {
-
-        var url = "404.html";
-
-        firebase.database().ref('qry-shortener/' + window.location.href.substring(window.location.href.indexOf('#') + 1)).once("value").then(function(snapshot) {
-            url = snapshot.val().URL;
-            console.log('Retreieved URL ' + url)
-            window.location.href = url;
-        });
-    }
-    </script>
 </body>
 
 </html>

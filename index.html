@@ -30,9 +30,14 @@
         var url = "404.html";
 
         firebase.database().ref('qry-shortener/' + window.location.href.substring(window.location.href.indexOf('#') + 1)).once("value").then(function(snapshot) {
-            url = snapshot.val().URL;
-            console.log('Retreieved URL ' + url)
-            window.location.href = url;
+            if (snapshot.val().URL) {
+                url = snapshot.val().URL;
+                console.log('Retreieved URL ' + url)
+                window.location.href = url;
+            }
+            else {
+                console.log('No url found')
+            }
         });
     }
     </script>

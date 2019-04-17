@@ -10,10 +10,11 @@
     <center>
         <div id="main" align="left">
             <br><br>
-            <label id="feedback"><strong>Create a short link</strong></label><br><br>
-            <label for="name">q.party#</label><input type="text" id="name" maxlength="12" size="7" placeholder="link-name" onkeypress="return AvoidSpace(event)"><br><br>
-            <label for="url">Link to </label><input type="text" id="url" maxlength="50" size="7" placeholder="example.tld" onkeypress="return AvoidSpace(event)"><br><br>
-            <button onclick="addFB()">Create short link</button>
+            <label id="feedback">&#127916; Create a short link</label><br><br>
+            <label for="name">q.party/# </label><input type="text" id="name" maxlength="12" size="14" placeholder="link-name" onkeypress="return AvoidSpace(event)"><br><br>
+            <label for="url">Link to </label><input type="text" id="url" maxlength="50" size="16" placeholder="example.tld" onkeypress="return AvoidSpace(event)"><br><br>
+            <button onclick="addFB()">Create short link</button><br><br>
+            <a href="" id="test"></a>
         </div>
     </center>
     <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
@@ -31,20 +32,32 @@
     firebase.initializeApp(config);
 
     function addFB() {
-        document.getElementById('feedback').innerHTML = "&#128336; Creating short link...";
         let name = document.getElementById('name').value,
             url = document.getElementById('url').value;
 
-        firebase.database().ref('qry-shortener/' + name).set({
-            Name: name,
-            URL: url
-        });
-        document.getElementById('feedback').innerHTML = "&#128077; Short link created.";
+        if (validURL(url)) {
+            document.getElementById('feedback').innerHTML = "&#128336; Creating short link...";
+            firebase.database().ref('qry-shortener/' + name).set({
+                Name: name,
+                URL: url
+            });
+            document.getElementById('feedback').innerHTML = "&#128077; Short link created.";
+            document.getElementById('test').innerHTML = "Test your link";
+            document.getElementById('test').href = "index.html#" + name;
+        } else {
+            document.getElementById('feedback').innerHTML = "&#10060; Invalid URL!";
+        }
     }
 
     function AvoidSpace(event) {
         let k = event ? event.which : window.event.keyCode;
         if (k == 32) return false;
+    }
+
+    function validURL(str) {
+        var a = document.createElement('a');
+        a.href = str;
+        return (a.host && a.host != window.location.host);
     }
     </script>
 </body>
