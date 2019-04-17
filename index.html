@@ -1,9 +1,73 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>QRY Tech</title>
+    <title>QRY Tech</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
+	<div>
+		<br>
+		<label id="feedback"></label><br><br>
+		<label for="name">q.party#</label><input type="text" id="name" maxlength="12" size="7" placeholder="link-name" onkeypress="return AvoidSpace(event)"><br><br>
+		<label for="name">Link to </label><input type="text" id="name" maxlength="50" size="7" placeholder="link-name" onkeypress="return AvoidSpace(event)"><br><br>
+		<button onclick="urlInst()">Create short link</button>
+	</div>
+
+    <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
+    <script>
+    let nameEl = document.querySelector("#nameEl");
+    let urlEl = document.querySelector("#urlEl");
+    let feedbackEl = document.querySelector("#feedback");
+
+    var config = {
+        apiKey: "AIzaSyDDzMxhv8Rdkag_BpYey3_8zk0x6g72FY8",
+        authDomain: "qry-shortener.firebaseapp.com",
+        databaseURL: "https://qry-shortener.firebaseio.com",
+        projectId: "qry-shortener",
+        storageBucket: "qry-shortener.appspot.com",
+        messagingSenderId: "941227555300"
+    };
+
+    firebase.initializeApp(config);
+
+	function success() {
+    	feedbackEl.innerHTML = "Succesfully added short link to database! 🎉";
+    }
+
+    function error() {
+    	feedbackEl.innerHTML = "Error in creating short link. Try again later. ◕︵◕";
+    }
+
+    function addUrl(name,url) {
+	    let urlObj = {
+	        name: name,
+	        url: url
+	    };
+
+	    firebase.database().ref('qry-shortener').push().set(urlObj)
+	        .then(function(snapshot) {
+	        	console.log('Success');
+	            success(); // some success method
+	        }, function(error) {
+	            console.log('Error' + error);
+	            error(); // some error method
+	    });
+	}
+
+	function AvoidSpace(event) {
+	    let k = event ? event.which : window.event.keyCode;
+	    if (k == 32) return false;
+	}
+
+	function urlInst() {
+		feedbackEl.innerHTML = "Adding short link...";
+		addUrl(nameEl,urlEl);
+	}
+
+    </script>
 </body>
+
 </html>
