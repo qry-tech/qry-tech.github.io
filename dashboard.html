@@ -75,6 +75,8 @@
 
     firebase.initializeApp(config);
 
+    let lastLink = "";
+
     function copyToClipboard(str) {
         // Create new element
         var el = document.createElement('textarea');
@@ -93,7 +95,7 @@
     }
 
     function copyLink() {
-        copyToClipboard(document.getElementById("test").href);
+        copyToClipboard(lastLink);
     }
 
     function addFB() {
@@ -112,6 +114,7 @@
                     });
                     document.getElementById('feedback').innerHTML = "&#128077; Short link created.";
                     document.getElementById('actions').style.display = "block";
+                    lastLink = 'http://qurl.pro/#' + name;
                     document.getElementById('crForm').reset();
                 }
             });
