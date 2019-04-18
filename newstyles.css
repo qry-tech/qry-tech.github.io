@@ -1,0 +1,51 @@
+* {
+	font-family: 'Montserrat', sans-serif !important;
+}
+.main-container {
+	width: 31vw;
+	margin-left: 34.5vw;
+	text-align: left;
+}
+.main {
+	width: 31vw;
+}
+p {
+	text-align: justify;
+	font-size: 22px !important;
+	line-height: 26px;
+	margin-bottom: 28px;
+}
+.title {
+	margin-top: 34vh !important;
+}
+h1 {
+	font-size: 42px;
+	font-weight: 700 !important;
+	line-height: 40px;
+}
+.nav-link, .btn {
+	font-size: 14px !important;
+}
+.background {
+  background-image: url("images/bg-dark.png");
+  background-repeat: repeat;
+  background-size: 10%;
+  background-position: 0px 0px;
+  animation: moveBG 40s linear infinite;
+}
+@keyframes moveBG {
+    from { background-position: 0 0; }
+    to { background-position: 25% 100%; }
+}
+.color-background {
+	background: #031926;
+}
+.navbar-brand {
+	font-size: 24px !important;
+}
+strong {
+	font-weight: 600;
+}
+.bluebtn {
+	border: 2px solid #2196f3;
+}

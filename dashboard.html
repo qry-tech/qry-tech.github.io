@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Q Url</title>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="newstyles.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="favicon.png">
+</head>
+
+<body class="color-background">
+    <div class="w3-sidebar w3-bar-block w3-border-right w3-light-grey w3-display-topleft" style="display:none" id="sidebar">
+        <button onclick="w3_close()" class="w3-bar-item w3-large w3-button w3-hover-light-grey">&#10006;</button>
+        <a href="home.html" class="w3-bar-item w3-button w3-hover-blue w3-medium">Home</a>
+        <a href="#" class="w3-bar-item w3-button w3-hover-blue w3-medium">Dashboard</a>
+        <a href="donate.html" class="w3-bar-item w3-button w3-hover-blue w3-medium">Donate</a>
+    </div>
+    <button class="w3-button w3-xlarge w3-hover-blue w3-text-white w3-display-topleft" onclick="w3_open()">☰</button>
+    <div class="main-container w3-text-blue">
+        <h1 class="title w3-text-blue">Dashboard</h1>
+        <div class="main w3-text-blue">
+            <br>
+            <button onclick="document.getElementById('id01').style.display='block'" class="w3-btn w3-hover-blue w3-border-blue w3-round-medium bluebtn w3-medium">Create a short link</a>
+        </div>
+    </div>
+    <div id="id01" class="w3-modal">
+        <div class="w3-modal-content">
+            <div class="w3-container w3-padding-32 w3-center">
+                <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright w3-hover-blue" style="padding:10px 15px">&#10006;</span>
+                <h1 class="w3-text-blue">&nbsp;</h1>
+                <h1 class="w3-text-blue">Create a short link</h1>
+                <form class="w3-container" onsubmit="addFB()" action="javascript:void(0);" id="crForm">
+                    <p class="w3-large">
+                        <label id="feedback"></label></p>
+                    <p>
+                        <p class="w3-medium">
+                            <label>Link name <em class="w3-medium">qurl.pro/#example</em></label>
+                            <input class="w3-input w3-border" type="text" id="name"></p>
+                        <p class="w3-medium">
+                            <label>Link to - <em class="w3-medium">subdomain.example.tld/page</em></label>
+                            <input class="w3-input w3-border" type="text" id="url"></p>
+                        <p class="w3-medium">
+                            <input class="w3-btn w3-hover-blue w3-border-blue w3-round-medium bluebtn w3-medium" type="submit" value="Create short link"></p>
+                        <p class="w3-medium">
+                            <label style="display:none" id="actions"><a href="#" onclick="copyLink();" class="w3-btn w3-hover-blue w3-border-blue w3-round-medium bluebtn w3-medium">Copy to clipboard</a></label></p>
+                </form>
+                <h1 class="w3-text-blue">&nbsp;</h1>
+            </div>
+        </div>
+    </div>
+    <script>
+    function w3_open() {
+        document.getElementById("sidebar").style.display = "block";
+    }
+
+    function w3_close() {
+        document.getElementById("sidebar").style.display = "none";
+    }
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
+    <script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyDDzMxhv8Rdkag_BpYey3_8zk0x6g72FY8",
+        authDomain: "qry-shortener.firebaseapp.com",
+        databaseURL: "https://qry-shortener.firebaseio.com",
+        projectId: "qry-shortener",
+        storageBucket: "qry-shortener.appspot.com",
+        messagingSenderId: "941227555300"
+    };
+
+    firebase.initializeApp(config);
+
+    function copyToClipboard(str) {
+        // Create new element
+        var el = document.createElement('textarea');
+        // Set value (string to be copied)
+        el.value = str;
+        // Set non-editable to avoid focus and move outside of view
+        el.setAttribute('readonly', '');
+        el.style = { position: 'absolute', left: '-9999px' };
+        document.body.appendChild(el);
+        // Select text inside element
+        el.select();
+        // Copy text to clipboard
+        document.execCommand('copy');
+        // Remove temporary element
+        document.body.removeChild(el);
+    }
+
+    function copyLink() {
+        copyToClipboard(document.getElementById("test").href);
+    }
+
+    function addFB() {
+        let name = document.getElementById('name').value,
+            url = document.getElementById('url').value;
+
+        if (validURL(url)) {
+            document.getElementById('feedback').innerHTML = "&#128336; Creating short link...";
+            firebase.database().ref('qry-shortener/' + name).once("value").then(function(snapshot) {
+                if (snapshot.val()) {
+                    document.getElementById('feedback').innerHTML = "&#10060; Short link is already in use!";
+                } else {
+                    firebase.database().ref('qry-shortener/' + name).set({
+                        Name: name,
+                        URL: url
+                    });
+                    document.getElementById('feedback').innerHTML = "&#128077; Short link created.";
+                    document.getElementById('actions').style.display = "block";
+                    document.getElementById('crForm').reset();
+                }
+            });
+        } else {
+            document.getElementById('feedback').innerHTML = "&#10060; Invalid URL!";
+        }
+    }
+
+    function AvoidSpace(event) {
+        let k = event ? event.which : window.event.keyCode;
+        if (k == 32) return false;
+    }
+
+    function validURL(str) {
+        var a = document.createElement('a');
+        a.href = str;
+        return (a.host && a.host != window.location.host);
+    }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Q Url</title>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="newstyles.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="favicon.png">
+</head>
+
+<body class="background">
+    <div class="w3-sidebar w3-bar-block w3-border-right w3-light-grey w3-display-topleft" style="display:none" id="sidebar">
+        <button onclick="w3_close()" class="w3-bar-item w3-large w3-button w3-hover-light-grey">&#10006;</button>
+        <a href="#" class="w3-bar-item w3-button w3-hover-blue w3-medium">Home</a>
+        <a href="dashboard.html" class="w3-bar-item w3-button w3-hover-blue w3-medium">Dashboard</a>
+        <a href="donate.html" class="w3-bar-item w3-button w3-hover-blue w3-medium">Donate</a>
+    </div>
+    <button class="w3-button w3-xlarge w3-hover-blue w3-text-white w3-display-topleft" onclick="w3_open()">☰</button>
+    <div class="main-container w3-text-blue">
+        <h1 class="title w3-text-blue">The link shortener with no limits.</h1>
+        <div class="main w3-text-blue">
+            <p>Unlike other URL shorteners, Q Url allows you to shorten as many links as you need with <strong>no registration, no payment, and no limits.</strong> Try it today and see what you're missing.</p>
+            <a href="dashboard.html" class="w3-btn w3-hover-blue w3-border-blue w3-round-medium bluebtn w3-medium">Visit your dashboard</a>
+        </div>
+    </div>
+    <script>
+    function w3_open() {
+        document.getElementById("sidebar").style.display = "block";
+    }
+
+    function w3_close() {
+        document.getElementById("sidebar").style.display = "none";
+    }
+    </script>
+</body>
+
+</html>

@@ -3,17 +3,21 @@
 
 <head>
     <title>Redirecting...</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" 
-      type="image/png" 
-      href="favicon.png">
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="newstyles.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="favicon.png">
 </head>
 
-<body>
-    <center>
-        <h1>Redirecting, please wait...</h1>
-        <h2><a href="create.html">Powered by QURL</a></h2>
-    </center>
+<body class="color-background">
+    <div class="main-container w3-text-blue">
+        <h1 class="title w3-text-blue">Redirecting...</h1>
+        <div class="main w3-text-blue">
+            <p>Powered by Q Url:</p>
+            <a href="dashboard.html" class="w3-btn w3-hover-blue w3-border-blue w3-round-medium bluebtn w3-medium">Make your own short links</a>
+        </div>
+    </div>
     <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
     <script>
     // Initialize Firebase
@@ -39,19 +43,18 @@
     if (window.location.href.indexOf("#") != -1) {
 
         var url = "404.html";
-
+        wait(500);
         firebase.database().ref('qry-shortener/' + window.location.href.substring(window.location.href.indexOf('#') + 1)).once("value").then(function(snapshot) {
             if (snapshot.val()) {
                 url = snapshot.val().URL;
                 console.log('Retreieved URL ' + url)
-                /*wait(1000);   ADD BACK WHEN MONETIZED*/
             } else {
                 console.log('No url found')
             }
             window.location.href = url;
         });
     } else {
-        window.location.href = "create.html";
+        window.location.href = "home.html";
     }
     </script>
 </body>
