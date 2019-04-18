@@ -102,7 +102,7 @@
         let name = document.getElementById('name').value,
             url = document.getElementById('url').value;
 
-        if (validURL(url)) {
+        if (validURL(url) && !(url.includes('qurl.pro'))) {
             document.getElementById('feedback').innerHTML = "&#128336; Creating short link...";
             firebase.database().ref('qry-shortener/' + name).once("value").then(function(snapshot) {
                 if (snapshot.val()) {
