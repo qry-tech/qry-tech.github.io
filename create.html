@@ -36,14 +36,20 @@
             url = document.getElementById('url').value;
 
         if (validURL(url)) {
-            document.getElementById('feedback').innerHTML = "&#128336; Creating short link...";
-            firebase.database().ref('qry-shortener/' + name).set({
-                Name: name,
-                URL: url
+            firebase.database().ref('qry-shortener/' + name).once("value").then(function(snapshot) {
+                if (snapshot.val()) {
+                    document.getElementById('feedback').innerHTML = "&#10060; Short link already exists!";
+                } else {
+                    document.getElementById('feedback').innerHTML = "&#128336; Creating short link...";
+                    firebase.database().ref('qry-shortener/' + name).set({
+                        Name: name,
+                        URL: url
+                    });
+                    document.getElementById('feedback').innerHTML = "&#128077; Short link created.";
+                    document.getElementById('test').innerHTML = "Test your link";
+                    document.getElementById('test').href = "index.html#" + name;
+                }
             });
-            document.getElementById('feedback').innerHTML = "&#128077; Short link created.";
-            document.getElementById('test').innerHTML = "Test your link";
-            document.getElementById('test').href = "index.html#" + name;
         } else {
             document.getElementById('feedback').innerHTML = "&#10060; Invalid URL!";
         }
