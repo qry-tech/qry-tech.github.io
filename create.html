@@ -9,12 +9,14 @@
 <body>
     <center>
         <div id="main" align="left">
-            <br><br>
-            <label id="feedback">&#127916; Create a short link</label><br><br>
-            <label for="name">qurl.pro/# </label><input type="text" id="name" maxlength="12" size="14" placeholder="link-name" onkeypress="return AvoidSpace(event)"><br><br>
-            <label for="url">Link to </label><input type="text" id="url" maxlength="150" size="19" placeholder="example.tld" onkeypress="return AvoidSpace(event)"><br><br>
-            <button onclick="addFB()">Create short link</button><br><br>
-            <a href="" id="test"></a>
+            <form onsubmit="addFB()" action="javascript:void(0);">
+                <br><br>
+                <label id="feedback">&#127916; Create a short link</label><br><br>
+                <label for="name">qurl.pro/# </label><input type="text" id="name" maxlength="12" size="14" placeholder="link-name" onkeypress="return AvoidSpace(event)"><br><br>
+                <label for="url">Link to </label><input type="text" id="url" placeholder="example.tld" onkeypress="return AvoidSpace(event)"><br><br>
+                <input type="submit" value="Shorten URL"><br><br>
+                <a href="" id="test" target="blank"></a>
+            </form>
         </div>
     </center>
     <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
@@ -48,6 +50,7 @@
                     document.getElementById('feedback').innerHTML = "&#128077; Short link created.";
                     document.getElementById('test').innerHTML = "Test your link";
                     document.getElementById('test').href = "index.html#" + name;
+                    document.querySelector('form').reset();
                 }
             });
         } else {
