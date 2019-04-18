@@ -7,10 +7,10 @@
 </head>
 
 <body>
-	<center>
-		<h1>Redirecting...</h1>
-		<h2><a href="create.html">Powered by Q URL</a></h2>
-	</center>
+    <center>
+        <h1>Redirecting, please wait...</h1>
+        <h2><a href="create.html">Powered by Q URL</a></h2>
+    </center>
     <script src="https://www.gstatic.com/firebasejs/5.9.4/firebase.js"></script>
     <script>
     // Initialize Firebase
@@ -25,23 +25,30 @@
 
     firebase.initializeApp(config);
 
+    function wait(ms) {
+        var start = new Date().getTime();
+        var end = start;
+        while (end < start + ms) {
+            end = new Date().getTime();
+        }
+    }
+
     if (window.location.href.indexOf("#") != -1) {
 
         var url = "404.html";
 
         firebase.database().ref('qry-shortener/' + window.location.href.substring(window.location.href.indexOf('#') + 1)).once("value").then(function(snapshot) {
-            if (snapshot.val().URL) {
+            if (snapshot.val()) {
                 url = snapshot.val().URL;
                 console.log('Retreieved URL ' + url)
-                window.location.href = url;
-            }
-            else {
+                wait(1000);
+            } else {
                 console.log('No url found')
             }
+            window.location.href = url;
         });
-    }
-    else {
-    	window.location.href = "create.html";
+    } else {
+        window.location.href = "create.html";
     }
     </script>
 </body>

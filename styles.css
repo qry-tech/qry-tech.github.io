@@ -20,12 +20,13 @@ input::placeholder {
 
 #main {
 	margin-left: 45%;
+	margin-top: 32vh;
 }
 
 h1 {
 	font-size: 40px;
 	line-height: 25px;
-	margin-top: 42vh;
+	margin-top: 40vh;
 }
 h2 {
 	font-size: 30px !important;
