@@ -16,7 +16,7 @@ p {
 	margin-bottom: 28px;
 }
 .title {
-	margin-top: 40vh !important;
+	margin-top: 35vh !important;
 }
 h1 {
 	font-size: 42px;
@@ -48,4 +48,12 @@ strong {
 }
 .bluebtn {
 	border: 2px solid #2196f3;
+}
+input[type="text"] {
+	width: 100%;
+	overflow: hidden;
+	display: inline-block;
+}
+tr>td {
+  padding-bottom: .75em;
 }

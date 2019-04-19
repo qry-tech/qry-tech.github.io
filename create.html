@@ -2,54 +2,43 @@
 <html>
 
 <head>
+    <meta charset='utf-8'>
     <title>Q Url</title>
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href="newstyles.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon.png">
 </head>
 
-<body class="color-background">
+<body class="background">
     <div class="w3-sidebar w3-bar-block w3-border-right w3-light-grey w3-display-topleft" style="display:none" id="sidebar">
         <button onclick="w3_close()" class="w3-bar-item w3-large w3-button w3-hover-light-grey">&#10006;</button>
-        <a href="home.html" class="w3-bar-item w3-button w3-hover-blue w3-medium">Home</a>
-        <a href="#" class="w3-bar-item w3-button w3-hover-blue w3-medium">Dashboard</a>
+        <a href="#" class="w3-bar-item w3-button w3-hover-blue w3-medium">Home</a>
         <a href="donate.html" class="w3-bar-item w3-button w3-hover-blue w3-medium">Donate</a>
     </div>
     <button class="w3-button w3-xlarge w3-hover-blue w3-text-white w3-display-topleft" onclick="w3_open()">☰</button>
     <div class="main-container w3-text-blue">
-        <h1 class="title w3-text-blue">Dashboard</h1>
+        <h1 class="title w3-text-blue">The link shortener with no limits.</h1>
         <div class="main w3-text-blue">
-            <br>
-            <button onclick="document.getElementById('id01').style.display='block'" class="w3-btn w3-hover-blue w3-border-blue w3-round-medium bluebtn w3-medium">Create a short link</a>
-        </div>
-    </div>
-    <div id="id01" class="w3-modal">
-        <div class="w3-modal-content">
-            <div class="w3-container w3-padding-32 w3-center">
-                <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright w3-hover-blue" style="padding:10px 15px">&#10006;</span>
-                <h1 class="w3-text-blue">&nbsp;</h1>
-                <h1 class="w3-text-blue">Create a short link</h1>
-                <form class="w3-container" onsubmit="addFB()" action="javascript:void(0);" id="crForm">
-                    <p class="w3-large">
-                        <label id="feedback"></label></p>
-                    <p>
-                        <p class="w3-medium">
-                            <label>Link name <em class="w3-medium">qurl.pro/#example</em></label>
-                            <input class="w3-input w3-border" type="text" id="name"></p>
-                        <p class="w3-medium">
-                            <label>Link to - <em class="w3-medium">subdomain.example.tld/page</em></label>
-                            <input class="w3-input w3-border" type="text" id="url"></p>
-                        <p class="w3-medium">
-                            <input class="w3-btn w3-hover-blue w3-border-blue w3-round-medium bluebtn w3-medium" type="submit" value="Create short link"></p>
-                        <p class="w3-medium">
-                            <label style="display:none" id="actions"><a href="#" onclick="copyLink();" class="w3-btn w3-hover-blue w3-border-blue w3-round-medium bluebtn w3-medium">Copy to clipboard</a></label></p>
-                </form>
-                <h1 class="w3-text-blue">&nbsp;</h1>
-            </div>
+            <p>Unlike other URL shorteners, Q Url allows you to shorten as many links as you need with <strong>no registration, no payment, and no limits.</strong> Try it today and see what you're missing.</p>
+            <form onsubmit="addFB()" action="javascript:void(0);" id="crForm">
+                <label id="feedback" style="margin-bottom:.75em !important;" class="w3-large">&#128071; Create a short link</label><br><br>
+                <table WIDTH=100% border=0 cellspacing=0 cellpadding=2 id="formtable"
+                  <tr>
+                    <td WIDTH="1" NOWRAP><label>qurl.pro/#</label></td>
+                    <td><input class="w3-input w3-border w3-round-medium w3-text-blue w3-light-grey" type="text" id="name" placeholder="link-name"></td>
+                  </tr>
+                  <tr>
+                    <td WIDTH="1" NOWRAP><label>Link to</label></td>
+                    <td><input class="w3-input w3-border w3-round-medium w3-text-blue w3-light-grey" type="text" id="url" placeholder="example.tld/subdirectory"></td>
+                  </tr>
+                  <tr>
+                    <td WIDTH="1" NOWRAP><label><input class="w3-btn w3-hover-blue w3-border-blue w3-round-medium bluebtn w3-medium" type="submit" value="Create short link"></label></td>
+                    <td><label style="display:none" id="actions"><a href="#" onclick="copyLink();" class="w3-btn w3-hover-blue w3-border-blue w3-round-medium bluebtn w3-medium">Copy to clipboard</a></label></td>
+                  </tr>
+                </table>
+            </form>
         </div>
     </div>
     <script>
@@ -109,7 +98,7 @@
                 document.getElementById('feedback').innerHTML = "&#128336; Creating short link...";
                 firebase.database().ref('qry-shortener/' + name).once("value").then(function(snapshot) {
                     if (snapshot.val()) {
-                        document.getElementById('feedback').innerHTML = "&#10060; Short link is already in use!";
+                        document.getElementById('feedback').innerHTML = "&#10060; This name is already in use!";
                     } else {
                         firebase.database().ref('qry-shortener/' + name).set({
                             Name: name,
@@ -124,8 +113,7 @@
             } else {
                 document.getElementById('feedback').innerHTML = "&#10060; Invalid URL!";
             }
-        }
-        else {
+        } else {
             document.getElementById('feedback').innerHTML = '&#10060; Link name cannot include ".", "#", "$", "[", or "]"!';
         }
     }
