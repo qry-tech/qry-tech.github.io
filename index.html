@@ -44,7 +44,7 @@
     if (window.location.href.indexOf("#") != -1) {
 
         var url = "404.html";
-        wait(500);
+        /*(500);*/
         firebase.database().ref('qry-shortener/' + window.location.href.substring(window.location.href.indexOf('#') + 1)).once("value").then(function(snapshot) {
             if (snapshot.val()) {
                 url = snapshot.val().URL;
